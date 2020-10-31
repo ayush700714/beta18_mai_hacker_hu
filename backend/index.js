@@ -10,7 +10,7 @@ const app = express();
 
 
 
-app.get('/sms', (req, res) => {
+app.post('/sms', (req, res) => {
     var accountSid = "AC989390046e3a31f6507e999541cd9cbf";
     var authToken = '8631af2e0369db126db5c950133dda00';
 
@@ -26,13 +26,9 @@ app.get('/sms', (req, res) => {
         .then((message) => res.send(`The message with id: ${message} was sent!`));
 });
 
-app.post('/sms', (req, res) => {
-    const twiml = new MessagingResponse();
-
-    twiml.message('The Robots are coming! Head for the hills!');
-    console.log(req.body)
-    res.writeHead(200, { 'Content-Type': 'text/xml' });
-    res.end(twiml.toString());
+app.get('/sms', (req, res) => {
+    res.send("Port exposed successfully");
+    console.log("successfull");
 });
 
 http.createServer(app).listen(5000, () => {
