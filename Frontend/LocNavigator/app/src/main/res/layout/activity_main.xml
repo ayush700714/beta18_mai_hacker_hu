@@ -81,17 +81,18 @@
         android:layout_marginLeft="50dp"
         android:text="SEND"
         android:textColor="#000"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:id="@+id/cont"
-        android:textColor="#FFF"
-        android:background="#424242"
 
-        android:text="CONTINUE"
-        android:layout_marginTop="250dp"/>
+            <Button
+                android:id="@+id/cont"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:background="#424242"
+
+                android:text="CONTINUE"
+                android:textColor="#FFF" />
     </LinearLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
