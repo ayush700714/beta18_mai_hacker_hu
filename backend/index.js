@@ -62,20 +62,7 @@ app.post('/sms',timeout('100s'), (req, res) => {
             else {
 
 
-              // try {
-              //   var data = response.body.code
-              //   client.messages
-              //     .create({
-              //       body: data,
-              //       to:"+916265070160",
-              //       from: "+12562517792",
-              //     })
-              //     .then((message) => { console.log("sent"); res.send(response.body); });
-              // }
-              // catch (e) {
-              //   console.log("twilio error" + e.message);
-              //   req.send("404");
-              // }
+    
 
               console.log(response.body);
 ///////////////////////////////kunal code/////////////////////////////////////////////////////////////
@@ -123,9 +110,7 @@ app.post('/sms',timeout('100s'), (req, res) => {
 
         }
 
-    //   });
-
-    // }
+   
 
   });
 

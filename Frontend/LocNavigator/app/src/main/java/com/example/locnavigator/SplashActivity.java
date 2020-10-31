@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import android.os.Handler;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LinearInterpolator;
@@ -19,24 +20,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class SplashActivity extends AppCompatActivity {
-    private boolean isFirstAnimation = false;
-
+    protected AlphaAnimation fadeIn = new AlphaAnimation(0.0f , 1.0f ) ;
+    protected AlphaAnimation fadeOut = new AlphaAnimation( 1.0f , 0.0f ) ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
 
-        /*Simple hold animation to hold ImageView in the centre of the screen at a slightly larger
-        scale than the ImageView's original one.*/
-        Animation hold = AnimationUtils.loadAnimation(this, R.anim.hold);
-
-        /* Translates ImageView from current position to its original position, scales it from
-        larger scale to its original scale.*/
-        final Animation translateScale = AnimationUtils.loadAnimation(this, R.anim.translate_scale);
-
         final ImageView imageView = findViewById(R.id.header_icon);
+        fadeIn.setStartOffset(10);
+        fadeIn.setDuration(1200);
+        imageView.startAnimation(fadeIn);
+        fadeIn.setFillAfter(true);
 
-        translateScale.setAnimationListener(new Animation.AnimationListener() {
+        fadeOut.setFillAfter(true);
+        fadeOut.setStartOffset(1000);
+        fadeOut.setDuration(500);
+
+
+        fadeIn.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
 
@@ -44,14 +46,8 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                if (!isFirstAnimation) {
-                    imageView.clearAnimation();
-                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+                imageView.startAnimation(fadeOut);
 
-                isFirstAnimation = true;
             }
 
             @Override
@@ -60,25 +56,16 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
-        hold.setAnimationListener(new Animation.AnimationListener() {
+
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onAnimationStart(Animation animation) {
+            public void run() {
+
+                startActivity(new Intent(SplashActivity.this,MainActivity.class));
+                SplashActivity.this.finish();
 
             }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                imageView.clearAnimation();
-                imageView.startAnimation(translateScale);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-        imageView.startAnimation(hold);
+        },3000);
 
 
     }
