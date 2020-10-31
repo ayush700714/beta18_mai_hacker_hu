@@ -11,6 +11,7 @@ const app = express();
 var accountSid = "AC76432d52b7c513e4b39dfc54eb93b355";
 var authToken = '3be08579259e0698be536ec47db66fb2';
 
+
 var twilio = require("twilio");
 var client = new twilio(accountSid, authToken);
 
@@ -41,6 +42,11 @@ app.get('/sms', (req, res) => {
           })
         }
         else {
+
+
+var twilio = require("twilio");
+var client = new twilio(accountSid, authToken);
+
 
           var url = "https://router.project-osrm.org/route/v1/driving/" + longituteS + "," + latitudeS + ";" + longituteD + "," + latitudeD + "?geometries=geojson&alternatives=true&steps=true&generate_hints=false"
           console.log(url);
@@ -83,6 +89,7 @@ app.get('/sms', (req, res) => {
 
 
 
+
 });
 
 http.createServer(app).listen(3000, () => {
@@ -90,3 +97,5 @@ http.createServer(app).listen(3000, () => {
 });
 
 //added SMS routs
+=======
+
