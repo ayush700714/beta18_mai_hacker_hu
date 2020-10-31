@@ -15,4 +15,9 @@
         android:toXDelta="0%"
         android:toYDelta="0%"
         android:zAdjustment="top"/>
+    <alpha
+        android:duration="800"
+        android:fromAlpha="1.0"
+        android:interpolator="@android:anim/accelerate_interpolator"
+        android:toAlpha="0.0" />
 </set>
