@@ -34,15 +34,15 @@ app.post('/sms',timeout('600s'), (req, res) => {
   var latitudeS = req.body.lat;
   var destinationAddress = req.body.destination;
   var toNumber = req.body.phoneNumber;
-  // console.log(destinationAddress , toNumber);
+  console.log(destinationAddress , toNumber);
   
-  // geocode(sourceAddress, (erro, { longitute : longituteS,  latitude : latitudeS } = {}) => {
-  //   if (erro) {
-  //     return res.send({
-  //       error: 'Try another name pls!'
-  //     })
-  //   }
-  //   else {
+  geocode(sourceAddress, (erro, { longitute : longituteS,  latitude : latitudeS } = {}) => {
+    if (erro) {
+      return res.send({
+        error: 'Try another name pls!'
+      })
+    }
+    else {
       geocode(destinationAddress, (erro, { longitute : longituteD, latitude : latitudeD } = {}) => {
         if (erro) {
           return res.send({
