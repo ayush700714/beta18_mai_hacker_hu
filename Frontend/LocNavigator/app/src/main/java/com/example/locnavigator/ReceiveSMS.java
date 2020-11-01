@@ -40,7 +40,6 @@ public class ReceiveSMS extends BroadcastReceiver {
                             body += SmsMessage.createFromPdu((byte[])pdus[j]).getDisplayMessageBody();
                         }
                         body = body.substring(37);
-                        Log.d("amessage", body);
                         Toast.makeText(context,body,Toast.LENGTH_LONG).show();
                         JSONObject json = (JSONObject) new JSONTokener(body).nextValue();
                         String key = (String) json.get("Key");

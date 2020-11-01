@@ -33,7 +33,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appbar">
 
-    <LinearLayout
+    <RelativeLayout
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -46,11 +46,20 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycle"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/my_progressBar"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-
-    </LinearLayout>
+        <ProgressBar
+            android:id="@+id/my_progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:visibility="visible"
+            android:layout_marginLeft="190dp"
+            android:indeterminateTint="#F00"
+            android:layout_marginTop="300dp"
+            android:indeterminateTintMode="src_in" />
+    </RelativeLayout>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

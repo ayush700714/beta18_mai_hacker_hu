@@ -27,6 +27,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,8 @@ public class SecondActivity extends AppCompatActivity implements ReceiveSMS.Mess
     Double lat=0.0;
    Double longt=0.0;
     String dest;
+    int q=0;
+    ProgressBar progressBar;
     ArrayList<location> a = new ArrayList<>();
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
@@ -51,7 +54,7 @@ public class SecondActivity extends AppCompatActivity implements ReceiveSMS.Mess
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-
+        progressBar = findViewById(R.id.my_progressBar);
         ReceiveSMS.bindListener(this);
         recyclerView = findViewById(R.id.recycle);
          adapter = new RecycleAdapter(a);
@@ -126,6 +129,11 @@ public class SecondActivity extends AppCompatActivity implements ReceiveSMS.Mess
     public void messageReceived(location l1) {
         Log.d("aa bhi ja", "aa gya");
         a.add(l1);
+        if(q==0)
+        {
+            q=1;
+            progressBar.setVisibility(View.INVISIBLE);
+        }
         adapter.notifyDataSetChanged();
 
     }
