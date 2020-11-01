@@ -38,17 +38,12 @@ import java.util.List;
 
 public class SecondActivity extends AppCompatActivity implements ReceiveSMS.MessageListener {
     private String phoneNo = "+918960507109";
-    TextView send_msg;
     String msg;
-    Double lat = 0.0, longt = 0.0;
     String key = "mai_hacker_hu";
-    String Destination;
-    LocationListener locationListener;
-    LocationManager locationManager;
     String json;
-    String msgContent = "DSFSDFDSFSDFSDFsdf";
-    int i = 0;
-    int p = 0;
+    Double lat=0.0;
+   Double longt=0.0;
+    String dest;
     ArrayList<location> a = new ArrayList<>();
     RecyclerView recyclerView;
     RecyclerView.Adapter adapter;
@@ -62,100 +57,40 @@ public class SecondActivity extends AppCompatActivity implements ReceiveSMS.Mess
          adapter = new RecycleAdapter(a);
         LinearLayoutManager l = new LinearLayoutManager(SecondActivity.this);
         l.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(new GridLayoutManager(SecondActivity.this, 2));
+        recyclerView.setLayoutManager(l);
         recyclerView.setAdapter(adapter);
 
-        locationManager = (LocationManager)
-                getSystemService(Context.LOCATION_SERVICE);
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                Log.d("loc changed", "onLocationChanged: ");
-                if (p == 0) {
-                    Toast.makeText(SecondActivity.this, "Location set", Toast.LENGTH_SHORT).show();
-                    p = 1;
+        Intent intent = getIntent();
+         lat = intent.getDoubleExtra("lat",0.0);
+         longt = intent.getDoubleExtra("longt",0.0);
+         dest = intent.getStringExtra("dest_string");
+
+        Log.d("SDFSDFSD", " "+lat+" "+longt+" "+dest);
+        if (!TextUtils.isEmpty(dest)) {
+
+            json = "{" + "\n   \"key\":" + " \"" + key + "\"," + "\n \"lat\":" + "\"" + lat + "\"," + "\n \"log\":" + " \"" + longt + "\" ," + "\n \"destination\":" + "\"" + dest + "\"" + "\n}";
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                Log.d("zxzxzxzxzxd", json);
+                if (ActivityCompat.checkSelfPermission(SecondActivity.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.SEND_SMS}, 10);
+                    // here to request the missing permissions, and then overriding
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                    //                                          int[] grantResults)
+                    // to handle the case where the user grants the permission. See the documentation
+                    // for ActivityCompat#requestPermissions for more details.
+                    return;
                 }
-                lat = location.getLatitude();
-                longt = location.getLongitude();
-
+                sendSMS(phoneNo, json);
+            } else {
+                sendSMS(phoneNo, json);
             }
 
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-
-            }
-        };
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Log.d("BROADCAST", "RECIEVER");
-            if (ActivityCompat.checkSelfPermission(SecondActivity.this, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.RECEIVE_SMS}, 12);
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Log.d("Dfddfdfd", "configButton:231232 ");
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 10);
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
-            }
-            configButton();
         } else {
-            configButton();
+            Toast.makeText(SecondActivity.this, "Please enter your location", Toast.LENGTH_SHORT).show();
         }
-
-
-        final Button send2 = (Button) findViewById(R.id.send2);
-        send2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText editText = findViewById(R.id.edittext_chatbox);
-                msg = editText.getText().toString().trim();
-                if (!TextUtils.isEmpty(msg)) {
-
-                    json = "{" + "\n   \"key\":" + " \"" + key + "\"," + "\n \"lat\":" + "\"" + lat + "\"," + "\n \"log\":" + " \"" + longt + "\" ," + "\n \"destination\":" + "\"" + msg + "\"" + "\n}";
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        Log.d("zxzxzxzxzxd", json);
-                        if (ActivityCompat.checkSelfPermission(SecondActivity.this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-                            requestPermissions(new String[]{Manifest.permission.SEND_SMS}, 10);
-                            // here to request the missing permissions, and then overriding
-                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                            //                                          int[] grantResults)
-                            // to handle the case where the user grants the permission. See the documentation
-                            // for ActivityCompat#requestPermissions for more details.
-                            return;
-                        }
-                        sendSMS(phoneNo, json);
-                    } else {
-                        sendSMS(phoneNo, json);
-                    }
-
-                } else {
-                    Toast.makeText(SecondActivity.this, "Please enter your location", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
     }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -164,10 +99,6 @@ public class SecondActivity extends AppCompatActivity implements ReceiveSMS.Mess
             case 10:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     sendSMS(phoneNo, json);
-                }
-            case 11:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    configButton();
                 }
 
         }
@@ -188,13 +119,7 @@ public class SecondActivity extends AppCompatActivity implements ReceiveSMS.Mess
         }
     }
 
-    public void configButton() {
-        Log.d("Dfddfdfd", "configButton: ");
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        locationManager.requestLocationUpdates("gps", 0, 0, locationListener);
-    }
+
 
 
     @Override

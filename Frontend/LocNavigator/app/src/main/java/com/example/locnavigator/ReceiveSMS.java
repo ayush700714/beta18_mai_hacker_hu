@@ -50,7 +50,29 @@ public class ReceiveSMS extends BroadcastReceiver {
                             String distance= (String)json.get("Distance");
                             String turn= (String)json.get("Turn");
                             String placeName= (String)json.get("Place_name");
-                            location l1 = new location(duration,distance,turn,placeName);
+                            String comp="";
+                            if(turn.equals("right"))
+                            {
+                                comp="Turn right"+" and then walk "+distance +" metres "+"for "+duration+" minutes."+" You might be near"+ placeName;
+                            }
+                            if(turn.equals("left"))
+                            {
+                                comp="Turn left"+" and then walk "+distance +" metres "+"for "+duration+" minutes."+" You might be near"+ placeName;
+                            }
+                            if(turn.equals("straight"))
+                            {
+                                comp="Go straight"+" and walk "+distance +" metres "+"for "+duration+" minutes."+" You might be near"+ placeName;
+                            }
+                            if(turn.equals("slight left"))
+                            {
+                                comp="Take a slight  right"+" and then walk "+distance +" metres "+"for "+duration+" minutes."+" You might be near"+ placeName;
+                            }
+                            if(turn.equals("slight right"))
+                            {
+                                comp="Take a slight left"+" and then walk "+distance +" metres "+"for "+duration+" minutes."+" You might be near"+ placeName;
+                            }
+                            Log.d("sdsa", comp);
+                            location l1 = new location(duration,distance,turn,placeName,comp);
 
                             mListener.messageReceived(l1);
                         }else{

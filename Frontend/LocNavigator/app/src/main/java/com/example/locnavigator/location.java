@@ -1,13 +1,14 @@
 package com.example.locnavigator;
 
 public class location  {
-    private String Duration,distance,turn,place_jname;
+    private String Duration,distance,turn,place_jname,comp_string;
 
-    public location(String duration, String distance, String turn, String place_jname) {
+    public location(String duration, String distance, String turn, String place_jname,String comp_string) {
         this.Duration = duration;
         this.distance = distance;
         this.turn = turn;
         this.place_jname = place_jname;
+        this.comp_string=comp_string;
 
     }
 
@@ -27,10 +28,6 @@ public class location  {
         this.distance = distance;
     }
 
-
-
-
-
     public String getTurn() {
         return turn;
     }
@@ -47,5 +44,11 @@ public class location  {
         this.place_jname = place_jname;
     }
 
+    public String getComp_string() {
+        return comp_string;
+    }
 
+    public void setComp_string(String comp_string) {
+        this.comp_string = comp_string;
+    }
 }

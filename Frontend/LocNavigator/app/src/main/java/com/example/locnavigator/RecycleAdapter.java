@@ -41,9 +41,28 @@ public class RecycleAdapter extends RecyclerView.Adapter<RecycleAdapter.RecycleH
     @Override
     public void onBindViewHolder(RecycleHolder holder, int position) {
         location b = mEa.get(position);
-        holder.t1.setText(b.getDuration());
-            holder.t2.setBackgroundResource(R.drawable.left);
+        holder.t1.setText(b.getComp_string());
 
+        if(b.getTurn().equals("left"))
+        {
+            holder.t2.setBackgroundResource(R.drawable.left);
+        }
+        if(b.getTurn().equals("right"))
+        {
+            holder.t2.setBackgroundResource(R.drawable.right);
+        }
+        if(b.getTurn().equals("straight"))
+        {
+            holder.t2.setBackgroundResource(R.drawable.left);
+        }
+        if(b.getTurn().equals("slight left"))
+        {
+            holder.t2.setBackgroundResource(R.drawable.left);
+        }
+        if(b.getTurn().equals("slight right"))
+        {
+            holder.t2.setBackgroundResource(R.drawable.right);
+        }
     }
 
     @Override
